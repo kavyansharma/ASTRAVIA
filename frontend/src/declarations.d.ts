@@ -1,0 +1,55 @@
+declare module 'lucide-react' {
+  import * as React from 'react';
+  export interface LucideProps extends React.SVGAttributes<SVGElement> {
+    size?: string | number;
+    color?: string;
+    strokeWidth?: string | number;
+    className?: string;
+  }
+  export type LucideIcon = React.FC<LucideProps>;
+  export const Satellite: LucideIcon;
+  export const Radio: LucideIcon;
+  export const AlertTriangle: LucideIcon;
+  export const ShieldCheck: LucideIcon;
+  export const FileText: LucideIcon;
+  export const Download: LucideIcon;
+  export const Activity: LucideIcon;
+  export const Globe: LucideIcon;
+  export const Flame: LucideIcon;
+  export const Waves: LucideIcon;
+  export const Wind: LucideIcon;
+  export const Layers: LucideIcon;
+  export const Eye: LucideIcon;
+  export const EyeOff: LucideIcon;
+  export const Shield: LucideIcon;
+  export const MapPin: LucideIcon;
+  export const Compass: LucideIcon;
+  export const Sliders: LucideIcon;
+  export const Maximize2: LucideIcon;
+  export const Zap: LucideIcon;
+  export const AlertCircle: LucideIcon;
+  export const Play: LucideIcon;
+  export const UploadCloud: LucideIcon;
+  export const RefreshCw: LucideIcon;
+  export const CloudRain: LucideIcon;
+  export const Cpu: LucideIcon;
+  export const Info: LucideIcon;
+  export const CheckCircle2: LucideIcon;
+  export const ChevronRight: LucideIcon;
+  export const X: LucideIcon;
+  export const Clock: LucideIcon;
+  export const Users: LucideIcon;
+  export const DollarSign: LucideIcon;
+  export const Building2: LucideIcon;
+  export const ShieldAlert: LucideIcon;
+  export const TrendingUp: LucideIcon;
+  export const Droplets: LucideIcon;
+  export const Search: LucideIcon;
+  export const Filter: LucideIcon;
+  export const Send: LucideIcon;
+  export const Bell: LucideIcon;
+  export const MessageSquare: LucideIcon;
+  export const Copy: LucideIcon;
+  export const Check: LucideIcon;
+  export const Printer: LucideIcon;
+}
