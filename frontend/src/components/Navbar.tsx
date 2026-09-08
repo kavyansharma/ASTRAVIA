@@ -4,6 +4,7 @@ import {
   FileText, Download, Activity, Globe, Flame, Waves, Wind
 } from 'lucide-react';
 import { DetectionResult } from '../types';
+import { checkBackendHealth } from '../services/api';
 
 interface NavbarProps {
   currentHazard: 'flood' | 'wildfire' | 'cyclone';
@@ -23,6 +24,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onExportGeoJSON
 }) => {
   const [utcTime, setUtcTime] = useState<string>('');
+  const [isBackendConnected, setIsBackendConnected] = useState<boolean | null>(null);
 
   useEffect(() => {
     const updateTime = () => {
@@ -32,6 +34,10 @@ export const Navbar: React.FC<NavbarProps> = ({
     updateTime();
     const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    checkBackendHealth().then((res) => setIsBackendConnected(res.online));
   }, []);
 
   const isLive = detectionResult?.weather_telemetry?.is_live_feed ?? true;
@@ -114,6 +120,18 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Data Source & Operational Badges */}
         <div className="flex items-center gap-2">
+          {/* Backend Connection Status Badge */}
+          <div className={`hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-md border text-[11px] font-mono ${
+            isBackendConnected === true
+              ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-400'
+              : isBackendConnected === false
+              ? 'bg-amber-500/10 border-amber-500/40 text-amber-300'
+              : 'bg-space-800/90 text-slate-400 border-space-700'
+          }`} title={isBackendConnected ? 'FastAPI Backend Online' : 'FastAPI Offline - Standalone Mode Active'}>
+            <Activity className="w-3.5 h-3.5" />
+            <span>{isBackendConnected === true ? 'BACKEND CONNECTED' : isBackendConnected === false ? 'STANDALONE MODE' : 'CHECKING API...'}</span>
+          </div>
+
           {/* Real Weather Badge */}
           <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-space-800/90 border border-emerald-500/30 text-[11px] font-mono text-emerald-400">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>

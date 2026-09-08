@@ -3,7 +3,19 @@ import {
   AlertDispatch, WeatherTelemetry, InfrastructureAsset
 } from '../types';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const RAW_API_URL = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || 'http://localhost:8000';
+export const API_BASE_URL = RAW_API_URL.replace(/\/+$/, '');
+
+export async function checkBackendHealth(): Promise<{ online: boolean; details?: any }> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/health`, { signal: AbortSignal.timeout(3000) });
+    if (!res.ok) return { online: false };
+    const data = await res.json();
+    return { online: true, details: data };
+  } catch {
+    return { online: false };
+  }
+}
 
 export async function fetchScenarios(): Promise<DisasterScenario[]> {
   try {
